@@ -134,6 +134,41 @@
           }
         }
       }
+    },
+    "ngx-mui-datatables": {
+      "root": "projects/ngx-mui-datatables",
+      "sourceRoot": "projects/ngx-mui-datatables/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-mui-datatables/tsconfig.lib.json",
+            "project": "projects/ngx-mui-datatables/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-mui-datatables/src/test.ts",
+            "tsConfig": "projects/ngx-mui-datatables/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-mui-datatables/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-mui-datatables/tsconfig.lib.json",
+              "projects/ngx-mui-datatables/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-mui-datatables-app"

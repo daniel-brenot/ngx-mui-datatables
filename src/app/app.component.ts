@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ngx-mui-datatables-app';
+  columns = ['Name', 'Company', 'City', 'State'];
+
+  data = [
+    ['Joe James', 'Test Corp', 'Yonkers', 'NY'],
+    ['John Walsh', 'Test Corp', 'Hartford', 'CT'],
+    ['Bob Herm', 'Test Corp', 'Tampa', 'FL'],
+    ['James Houston', 'Test Corp', 'Dallas', 'TX'],
+  ];
+
+  options = {
+    filterType: 'checkbox',
+  };
 }

@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-mui-datatables": [
+        "dist/ngx-mui-datatables"
+      ],
+      "ngx-mui-datatables/*": [
+        "dist/ngx-mui-datatables/*"
+      ]
+    }
   }
 }

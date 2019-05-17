@@ -1,27 +1,377 @@
-# NgxMuiDatatablesApp
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/19170080/34070522-e15d32e2-e235-11e7-8af5-fa704cdcad56.png" />
+</div>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+# NGX-MUI-Datatables - Datatables for Material-UI(Angular)
 
-## Development server
+[![Build Status](https://travis-ci.org/gregnb/mui-datatables.svg?branch=master)](https://travis-ci.org/gregnb/mui-datatables)
+[![NPM Downloads](https://img.shields.io/npm/dt/mui-datatables.svg?style=flat)](https://npmcharts.com/compare/mui-datatables?minimal=true)
+[![Coverage Status](https://coveralls.io/repos/github/gregnb/mui-datatables/badge.svg?branch=master)](https://coveralls.io/github/gregnb/mui-datatables?branch=master)
+[![dependencies Status](https://david-dm.org/gregnb/mui-datatables/status.svg)](https://david-dm.org/gregnb/mui-datatables)
+[![npm version](https://badge.fury.io/js/mui-datatables.svg)](https://badge.fury.io/js/mui-datatables)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This library is based off of the MUI-Datatables. The original library was written in react, and this simply provides a compatability layer between angular and the library, providing access to the bindings and other properties that the library offers.
 
-## Code scaffolding
+<a href="https://github.com/gregnb/mui-datatables">Link to original library on github</a>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+MUI-Datatables is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are two responsive modes "stacked" and "scroll" for mobile/tablet devices.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+<div align="center">
+	<img src="https://user-images.githubusercontent.com/19170080/38026128-eac9d506-3258-11e8-92a7-b0d06e5faa82.gif" />
+</div>
 
-## Running unit tests
+## Install
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`npm install ngx-mui-datatables --save`
+or with yarn
+`yarn add ngx-mui-datatables`
 
-## Running end-to-end tests
+## Usage
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Add the NgxMuiDatatableModule to your app module
 
-## Further help
+```js
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { NgxMuiDatatablesModule } from 'ngx-mui-datatables';
+import { AppComponent } from './app.component';
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    NgxMuiDatatablesModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+```
+
+For a simple table:
+
+```js
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  columns = ['Name', 'Company', 'City', 'State'];
+
+  data = [
+    ['Joe James', 'Test Corp', 'Yonkers', 'NY'],
+    ['John Walsh', 'Test Corp', 'Hartford', 'CT'],
+    ['Bob Herm', 'Test Corp', 'Tampa', 'FL'],
+    ['James Houston', 'Test Corp', 'Dallas', 'TX'],
+  ];
+
+  options = {
+    filterType: 'checkbox',
+  };
+}
+
+```
+
+```html
+<ngx-mui-datatable title="Employee List" [data]="data" [columns]="columns" [options]="options"></ngx-mui-datatable>
+```
+
+Or customize columns:
+
+```js
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
+})
+export class AppComponent {
+  columns = [
+    {
+      name: 'name',
+      label: 'Name',
+      options: {
+        filter: true,
+        sort: true,
+      }
+    },
+    {
+      name: 'company',
+      label: 'Company',
+      options: {
+        filter: true,
+        sort: false,
+      }
+    },
+    {
+      name: 'city',
+      label: 'City',
+      options: {
+        filter: true,
+        sort: false,
+      }
+    },
+    {
+      name: 'state',
+      label: 'State',
+      options: {
+        filter: true,
+        sort: false,
+      }
+    },
+  ];
+
+  data = [
+    { name: 'Joe James', company: 'Test Corp', city: 'Yonkers', state: 'NY' },
+    { name: 'John Walsh', company: 'Test Corp', city: 'Hartford', state: 'CT' },
+    { name: 'Bob Herm', company: 'Test Corp', city: 'Tampa', state: 'FL' },
+    { name: 'James Houston', company: 'Test Corp', city: 'Dallas', state: 'TX' },
+  ];
+
+  options = {
+    filterType: 'checkbox',
+  };
+}
+
+```
+
+## API
+
+
+#### &lt;NgxMuiDataTable />
+
+The component accepts the following props:
+
+|Name|Type|Description
+|:--:|:-----|:-----|
+|**`title`**|array|Title used to caption table
+|**`columns`**|array|Columns used to describe table. Must be either an array of simple strings or objects describing a column
+|**`data`**|array|Data used to describe table. Must be an array containing objects. (Arrays containing just strings or numbers also supported) 
+|**`options`**|object|Options used to describe table
+
+#### Options:
+|Name|Type|Default|Description
+|:--:|:-----|:--|:-----|
+|**`page`**|number||User provided starting page for pagination
+|**`count`**|number||User provided override for total number of rows
+|**`serverSide`**|boolean|false|Enable remote data source
+|**`rowsSelected`**|array||User provided selected rows
+|**`filterType `**|string||Choice of filtering view. `enum('checkbox', 'dropdown', 'multiselect', 'textField')`
+|**`textLabels `**|object||User provided labels to localize text
+|**`pagination`**|boolean|true|Enable/disable pagination
+|**`selectableRows`**|string|'multiple'|Numbers of rows that can be selected. Options are "multiple", "single", "none".
+|**`isRowSelectable`**|function||Enable/disable selection on certain rows with custom function. Returns true if not provided.  `function(dataIndex) => bool`
+|**`resizableColumns`**|boolean|false|Enable/disable resizable columns
+|**`expandableRows`**|boolean|false|Enable/disable expandable rows
+|**`customToolbar`**|function||Render a custom toolbar
+|**`customToolbarSelect`**|function||Render a custom selected rows toolbar. `function(selectedRows, displayData, setSelectedRows) => void`
+|**`customFooter`**|function||Render a custom table footer. `function(count, page, rowsPerPage, changeRowsPerPage, changePage) => string`
+|**`customSort`**|function||Override default sorting with custom function. `function(data: array, colIndex: number, order: string) => array`
+|**`customSearch `**|function||Override default search with custom function. `customSearch(searchQuery: string, currentRow: array, columns: array) => boolean`
+|**`elevation`**|number|4|Shadow depth applied to Paper component
+|**`caseSensitive `**|boolean|false|Enable/disable case sensitivity for search
+|**`responsive`**|string|'stacked'|Enable/disable responsive table views. Options: 'stacked', 'scroll'
+|**`rowsPerPage`**|number|10|Number of rows allowed per page
+|**`rowsPerPageOptions`**|array|[10,15,20]|Options to provide in pagination for number of rows a user can select
+|**`rowHover`**|boolean|true|Enable/disable hover style over rows
+|**`fixedHeader`**|boolean|true|Enable/disable fixed header columns
+|**`sortFilterList`**|boolean|true|Enable/disable alphanumeric sorting of filter lists
+|**`sort`**|boolean|true|Enable/disable sort on all columns
+|**`filter`**|boolean|true|Show/hide filter icon from toolbar
+|**`search`**|boolean|true|Show/hide search icon from toolbar
+|**`searchText`**|string||Initial search text
+|**`print`**|boolean|true|Show/hide print	 icon from toolbar
+|**`download`**|boolean|true|Show/hide download icon from toolbar
+|**`downloadOptions`**|object||Options to change the output of the CSV file. Default options: `{filename: 'tableDownload.csv', separator: ','}`
+|**`onDownload`**|function||A callback function that triggers when the user downloads the CSV file. In the callback, you can control what is written to the CSV file. `function(buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string`
+|**`viewColumns`**|boolean|true|Show/hide viewColumns icon from toolbar
+|**`onRowsSelect`**|function||Callback function that triggers when row(s) are selected. `function(currentRowsSelected: array, allRowsSelected: array) => void`
+|**`onRowsDelete`**|function||Callback function that triggers when row(s) are deleted. `function(rowsDeleted: object(lookup: {dataindex: boolean}, data: arrayOfObjects: {index, dataIndex})) => void OR false` (Returning `false` prevents row deletion.)
+|**`onRowClick`**|function||Callback function that triggers when a row is clicked. `function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void`
+|**`onCellClick`**|function||Callback function that triggers when a cell is clicked. `function(colData: any, cellMeta: { colIndex: number, rowIndex: number, dataIndex: number }) => void`
+|**`onChangePage`**|function||Callback function that triggers when a page has changed. `function(currentPage: number) => void`
+|**`onChangeRowsPerPage`**|function||Callback function that triggers when the number of rows per page has changed. `function(numberOfRows: number) => void`
+|**`onSearchChange`**|function||Callback function that triggers when the search text value has changed. `function(searchText: string) => void`
+|**`onSearchOpen`**|function||Callback function that triggers when the searchbox opens. `function() => void`
+|**`onFilterChange`**|function||Callback function that triggers when filters have changed. `function(changedColumn: string, filterList: array) => void`
+|**`onColumnSortChange`**|function||Callback function that triggers when a column has been sorted. `function(changedColumn: string, direction: string) => void`
+|**`onColumnViewChange`**|function||Callback function that triggers when a column view has been changed. `function(changedColumn: string, action: string) => void`
+|**`onTableChange`**|function||Callback function that triggers when table state has changed. `function(action: string, tableState: object) => void`
+|**`setRowProps`**|function||Is called for each row and allows to return custom props for this row based on its data. `function(row: array, dataIndex: number) => object`
+
+## Customize Columns
+
+On each column object, you have the ability to customize columns to your liking with the 'options' property. Example:
+
+```js
+const columns = [
+ {
+  name: "Name",
+  options: {
+   filter: true,
+   sort: false
+  }
+ },
+ ...
+];
+```
+
+#### Column:
+|Name|Type|Description
+|:--:|:-----|:-----|
+|**`name`**|string|Name of column (This field is required)
+|**`label`**|string|Column Header Name override
+|**`options`**|object|Options for customizing column
+
+
+#### Column Options:
+|Name|Type|Default|Description
+|:--:|:-----|:--|:-----|
+|**`display`**|string|'true'|Display column in table. `enum('true', 'false', 'excluded')`
+|**`empty`**|boolean|false|This denotes whether the column has data or not (for use with intentionally empty columns)
+|**`viewColumns`**|boolean|true|Allow user to toggle column visibility through 'View Column' list
+|**`filterList`**|array||Filter value list [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/column-filters/index.js)
+|**`filterOptions`**|array||Filter options [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/column-filters/index.js)
+|**`customFilterListRender`**|function||Function that returns a string used as the chip label. `function(value) => string` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/column-filters/index.js)
+|**`filter`**|boolean|true|Display column in filter list
+|**`filterType `**|string|'dropdown'|Choice of filtering view. Takes priority over global filterType option.`enum('checkbox', 'dropdown', 'multiselect', 'textField')`.
+|**`sort`**|boolean|true|Enable/disable sorting on column
+|**`searchable`**|boolean|true|Exclude/include column from search results
+|**`sortDirection`**|string||Set default sort order `enum('asc', 'desc')`
+|**`print`**|boolean|true|Display column when printing
+|**`download`**|boolean|true|Display column in CSV download file
+|**`hint`**|string||Display hint icon with string as tooltip on hover.
+|**`customHeadRender`**|function||Function that returns a string. Used as display for column header. `function(columnMeta, handleToggleColumn) => string`
+|**`customBodyRender`**|function||Function that returns a string. Used as display data within all table cells of a given column. `function(value, tableMeta, updateValue) => string` [Example](https://github.com/gregnb/mui-datatables/blob/master/examples/component/index.js)
+|**`setCellProps`**|function||Is called for each cell and allows to return custom props for this cell based on its data. `function(cellValue: string, rowIndex: number, columnIndex: number) => object`
+
+`customHeadRender` is called with these arguments:
+
+```js
+function(columnMeta: {
+  customHeadRender: func,
+  display: enum('true', 'false', 'excluded'),
+  filter: bool,
+  sort: bool,
+  sortDirection: bool,
+  download: bool,
+  empty: bool,
+  index: number,
+  label: string,
+  name: string,
+  print: bool,
+  searchable: bool,
+  viewColumns: bool
+}, handleToggleColumn: function(columnIndex))
+```
+
+
+`customBodyRender` is called with these arguments:
+
+```js
+function(value: any, tableMeta: {
+  rowIndex: number,
+  columnIndex: number,
+  columnData: array, // Columns Options object
+  rowData: array, // Full row data
+  tableData: array, Full table data
+  tableState: {
+    announceText: null|string,
+    page: number,
+    rowsPerPage: number,
+    filterList: array,
+    selectedRows: {
+      data: array,
+      lookup: object,
+    },
+    showResponsive: boolean,
+    searchText: null|string,
+  },
+}, updateValue: function)
+```
+
+## Customize Styling
+
+The original library provided a way to style the components, however for the moment it is not supported in this version. An oficial way may come in the future, but not at this point in time.
+
+## Remote Data
+
+If you are looking to work with remote data sets or handle pagination, filtering, and sorting on a remote server you can do that with the following options:
+
+```js
+const options = {
+  serverSide: true,
+  onTableChange: (action, tableState) => {
+    this.xhrRequest('my.api.com/tableData', result => {
+      this.setState({ data: result });
+    });
+  }
+};
+```
+
+To see an example **[Click Here](https://github.com/gregnb/mui-datatables/blob/master/examples/serverside-pagination/index.js)**
+
+## Localization
+
+This package decided that the cost of bringing in another library to perform localizations would be too expensive. Instead the ability to override all text labels (which aren't many) is offered through the options property `textLabels`.  The available strings:
+
+```js
+const options = {
+  ...
+  textLabels: {
+    body: {
+      noMatch: "Sorry, no matching records found",
+      toolTip: "Sort",
+    },
+    pagination: {
+      next: "Next Page",
+      previous: "Previous Page",
+      rowsPerPage: "Rows per page:",
+      displayRows: "of",
+    },
+    toolbar: {
+      search: "Search",
+      downloadCsv: "Download CSV",
+      print: "Print",
+      viewColumns: "View Columns",
+      filterTable: "Filter Table",
+    },
+    filter: {
+      all: "All",
+      title: "FILTERS",
+      reset: "RESET",
+    },
+    viewColumns: {
+      title: "Show Columns",
+      titleAria: "Show/Hide Table Columns",
+    },
+    selectedRows: {
+      text: "row(s) selected",
+      delete: "Delete",
+      deleteAria: "Delete Selected Rows",
+    },
+  }
+  ...
+}
+```
+
+## License
+The files included in this repository are licensed under the MIT license.
+
+## Thanks
+
+[<img src="https://www.browserstack.com/images/mail/browserstack-logo-footer.png" width="120">](https://www.browserstack.com/)
+
+Thank you to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.
+
+Thank you to the original author of this library [MUIDataTables](https://github.com/gregnb/mui-datatables). 
