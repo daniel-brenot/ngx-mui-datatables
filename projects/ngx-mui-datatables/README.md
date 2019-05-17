@@ -147,9 +147,6 @@ export class AppComponent {
 
 ## API
 
-
-#### &lt;NgxMuiDataTable />
-
 The component accepts the following props:
 
 |Name|Type|Description
