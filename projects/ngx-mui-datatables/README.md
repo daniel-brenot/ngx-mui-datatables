@@ -27,7 +27,20 @@ MUI-Datatables is a data tables component built on [Material-UI](https://www.mat
 or with yarn
 `yarn add ngx-mui-datatables`
 
+This library also requires you to install the following libraries
+`npm install @material-ui/icons`
+`npm install @material-ui/core`
+or with yarn
+`yarn add @material-ui/icons`
+`yarn add @material-ui/core`
+
 ## Usage
+
+Add the following line to your polyfills.ts file. This will fix an error caused by using a react framework in angular.
+
+```js
+(window as any).global = window;
+```
 
 Add the NgxMuiDatatableModule to your app module
 
@@ -146,6 +159,9 @@ export class AppComponent {
 ```
 
 ## API
+
+
+#### &lt;NgxMuiDataTable />
 
 The component accepts the following props:
 
@@ -370,3 +386,5 @@ The files included in this repository are licensed under the MIT license.
 [<img src="https://www.browserstack.com/images/mail/browserstack-logo-footer.png" width="120">](https://www.browserstack.com/)
 
 Thank you to [BrowserStack](https://www.browserstack.com/) for providing the infrastructure that allows us to test in real browsers.
+
+Thank you to the original author of this library [MUIDataTables](https://github.com/gregnb/mui-datatables). 
