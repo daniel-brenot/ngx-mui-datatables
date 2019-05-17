@@ -5,7 +5,8 @@
     "type": "git",
     "url": "https://github.com/daniel-brenot/ngx-mui-datatables"
   },
-  "version": "0.0.3",
+  "version": "0.0.5",
+  "description": "An adaptation of MUI Datatables for Angular",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
