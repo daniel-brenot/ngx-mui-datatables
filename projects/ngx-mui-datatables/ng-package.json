@@ -8,6 +8,8 @@
     "tslib",
     "mui-datatables",
     "react",
-    "uuid"
+    "uuid",
+    "@material-ui/core",
+    "@material-ui/icons"
   ]
 }
