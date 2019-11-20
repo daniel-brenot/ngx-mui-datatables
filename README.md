@@ -4,6 +4,11 @@
 
 # NGX-MUI-Datatables - Datatables for Material-UI(Angular)
 
+THIS LIBRARY IS CURRENTLY IN MAINTENANCE.
+
+This project was originally a wrapper for the original mui-datatables library made in react, and will now take a new direction to be made natively in Angular 8. Your patience is appreciated, and I will do as much as I can to integrate features as I can and make this library as useable as possible.
+
+
 This library is based off of the MUI-Datatables. The original library was written in react, and this simply provides a compatability layer between angular and the library, providing access to the bindings and other properties that the library offers.
 
 <a href="https://github.com/gregnb/mui-datatables">Link to original library on github</a>
