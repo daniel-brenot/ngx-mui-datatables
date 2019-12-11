@@ -1,8 +1,9 @@
 import { Component, Input, OnInit, OnDestroy, OnChanges, AfterViewInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
-import { SearchDialogComponent } from '../dialogs/search/search-dialog.component';
-
+import { MatPaginator, MatTableDataSource, MatDialog, MatSort } from '@angular/material';
+import { FilterDialogComponent } from '../dialogs/filter/filter-dialog.component';
+import { getFilter, getPrintableHTML, printHtml } from './utils';
+import { ColumnsDialogComponent } from '../dialogs/columns/columns-dialog.component';
 
 export interface IMUIDTOptions {
     /** User provided starting page for pagination */
@@ -10,89 +11,89 @@ export interface IMUIDTOptions {
     /** User provided override for total number of rows */
     count?: number;
     /** Enable remote data source */
-    serverSide: boolean;
+    serverSide?: boolean;
     /** User provided selected rows */
     rowsSelected?: [];
     /** Choice of filtering view. enum('checkbox', 'dropdown', 'multiselect', 'textField') */
     filterType?: string;
     /** User provided labels to localize text */
-    textLabels: ITextLabels;
+    textLabels?: ITextLabels;
     /** Enable/disable pagination */
-    pagination: boolean;
+    pagination?: boolean;
     /** Numbers of rows that can be selected. Options are 'multiple', 'single', 'none'. */
-    selectableRows: 'multiple' | 'single' | 'none';
+    selectableRows?: 'multiple' | 'single' | 'none';
     /** Enable/disable select toggle when row is clicked. When False, only checkbox will trigger this action. */
-    selectableRowsOnClick: boolean;
+    selectableRowsOnClick?: boolean;
     /** Enable/disable selection on certain rows with custom function. Returns true if not provided. function(dataIndex) => bool */
     isRowSelectable?: (dataIndex: number) => boolean;
     /** Enable/disable resizable columns */
-    resizableColumns: boolean;
+    resizableColumns?: boolean;
     /** Enable/disable expandable rows */
-    expandableRows: boolean;
+    expandableRows?: boolean;
     /** Enable/disable expand trigger when row is clicked. When False, only expand icon will trigger this action. */
-    expandableRowsOnClick: boolean;
+    expandableRowsOnClick?: boolean;
     /** Override default sorting with custom function. function(data: array, colIndex: number, order: string) => array */
     customSort?: (data: any[], colIndex: number, order: string) => any[];
     /** Override default search with custom function. customSearch(searchQuery: string, currentRow: array, columns: array) => boolean */
-    customSearch: (searchQuery: string, currentRow: any[], columns: any[]) => boolean;
+    customSearch?: (searchQuery: string, currentRow: any[], columns: any[]) => boolean;
     /** Shadow depth applied to Paper component */
-    elevation: number;
+    elevation?: number;
     /** Enable/disable case sensitivity for search */
-    caseSensitive: boolean;
+    caseSensitive?: boolean;
     /** Enable/disable responsive table views. Options: 'stacked', 'scroll' */
-    responsive: string;
+    responsive?: string;
     /** Number of rows allowed per page */
-    rowsPerPage: number;
+    rowsPerPage?: number;
     /** Options to provide in pagination for number of rows a user can select */
-    rowsPerPageOptions: number[];
+    rowsPerPageOptions?: number[];
     /** Enable/disable hover style over rows */
-    rowHover: boolean;
-    /** 	Enable/disable fixed header columns */
-    fixedHeader: boolean;
+    rowHover?: boolean;
+    /** Enable/disable fixed header columns */
+    fixedHeader?: boolean;
     /** Enable/disable alphanumeric sorting of filter lists */
     sortFilterList?: boolean;
     /** Enable/disable sort on all columns */
-    sort: boolean;
+    sort?: boolean;
     /** Show/hide filter icon from toolbar */
-    filter: boolean;
+    filter?: boolean;
     /** Show/hide search icon from toolbar */
-    search: boolean;
+    search?: boolean;
     /** Initial search text */
     searchText?: string;
     /** Show/hide print	icon from toolbar */
-    print: boolean;
+    print?: boolean;
     /** Show/hide download icon from toolbar */
-    download: boolean;
+    download?: boolean;
     /** Options to change the output of the CSV file. Default options: {filename: 'tableDownload.csv', separator: ','} */
-    downloadOptions: { filename: string, separator: string };
+    downloadOptions?: { filename: string, separator: string };
     /** A callback function that triggers when the user downloads the CSV file. In the callback, you can control what is written to the CSV file. function(buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string */
-    onDownload: (buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string;
+    onDownload?: (buildHead: (columns) => string, buildBody: (data) => string, columns, data) => string | boolean;
     /** Show/hide viewColumns icon from toolbar */
-    viewColumns: boolean;
+    viewColumns?: boolean;
     /** Callback function that triggers when row(s) are selected. function(currentRowsSelected: array, allRowsSelected: array) => void */
-    onRowsSelect: (currentRowsSelected: any[], allRowsSelected: any[]) => void;
+    onRowsSelect?: (currentRowsSelected: any[], allRowsSelected: any[]) => void;
     /** Callback function that triggers when row(s) are deleted. function(rowsDeleted: object(lookup: {dataindex: boolean}, data: arrayOfObjects: {index, dataIndex})) => void OR false (Returning false prevents row deletion.) */
-    onRowsDelete: (rowsDeleted: { lookup: { dataindex: boolean }, data: { index, dataIndex }[] }) => void | false;
+    onRowsDelete?: (rowsDeleted: { lookup: { dataindex: boolean }, data: { index, dataIndex }[] }) => void | false;
     /** Callback function that triggers when a row is clicked. function(rowData: string[], rowMeta: { dataIndex: number, rowIndex: number }) => void */
-    onRowClick: (rowData: string, rowMeta: { dataIndex: number, rowIndex: number }) => void,
+    onRowClick?: (rowData: string, rowMeta: { dataIndex: number, rowIndex: number }) => void,
     /** Callback function that triggers when a cell is clicked. function(colData: any, cellMeta: { colIndex: number, rowIndex: number, dataIndex: number }) => void */
-    onCellClick: (colData: any, cellMeta: { colIndex: number, rowIndex: number, dataIndex: number }) => void;
+    onCellClick?: (colData: any, cellMeta: { colIndex: number, rowIndex: number, dataIndex: number }) => void;
     /** Callback function that triggers when a page has changed. function(currentPage: number) => void */
-    onChangePage: (currentPage: number) => void;
+    onChangePage?: (currentPage: number) => void;
     /** Callback function that triggers when a page has changed.  */
-    onChangeRowsPerPage: (numberOfRows: number) => void;
+    onChangeRowsPerPage?: (numberOfRows: number) => void;
     /** Callback function that triggers when the search text value has changed. function(searchText: string) => void */
-    onSearchChange: (searchText: string) => void;
+    onSearchChange?: (searchText: string) => void;
     /** Callback function that triggers when the searchbox opens. function() => void */
-    onSearchOpen: () => void;
+    onSearchOpen?: () => void;
     /** Callback function that triggers when filters have changed. function(changedColumn: string, filterList: array) => void */
-    onFilterChange: (changedColumn: string, filterList: any[]) => void;
+    onFilterChange?: (changedColumn: string, filterList: any[]) => void;
     /** Callback function that triggers when a column has been sorted. function(changedColumn: string, direction: string) => void */
-    onColumnSortChange: (changedColumn: string, direction: string) => void;
+    onColumnSortChange?: (changedColumn: string, direction: string) => void;
     /** Callback function that triggers when a column view has been changed. function(changedColumn: string, action: string) => void */
-    onColumnViewChange: (changedColumn: string, action: string) => void;
+    onColumnViewChange?: (changedColumn: string, action: string) => void;
     /** Callback function that triggers when table state has changed. function(action: string, tableState: object) => void */
-    onTableChange: (action: string, tableState: any) => void;
+    onTableChange?: (action: string, tableState: any) => void;
 }
 
 export interface IColumn {
@@ -239,12 +240,17 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
                 this.dataLocal.data.push(row);
             }
         }
+        if(!this.dataLocal.data){
+            
+            this.dataLocal.data;
+        }
     }
     get data(): any[] {
         return this.dataLocal.data;
     }
 
     @Input() set options(val: IMUIDTOptions) {
+        // TODO deep merge?
         this.optionsLocal = {
             serverSide: false,
             pagination: true,
@@ -271,7 +277,7 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
             print: true,
             download: true,
             downloadOptions: { filename: 'tableDownload.csv', separator: ',' },
-            onDownload: (buildHead: (columns) => string, buildBody: (data) => string, columns, data) => '',
+            onDownload: (buildHead: (columns) => string, buildBody: (data) => string, columns, data) => true,
             viewColumns: true,
             onRowsSelect: () => { },
             onRowsDelete: () => { },
@@ -304,8 +310,8 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
                 },
                 filter: {
                     all: 'All',
-                    title: 'FILTERS',
-                    reset: 'RESET',
+                    title: 'Filters',
+                    reset: 'Reset',
                 },
                 viewColumns: {
                     title: 'Show Columns',
@@ -322,6 +328,7 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
     }
 
     @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+    @ViewChild(MatSort, { static: false}) sort: MatSort;
 
     /** Local copy of columns in  format that can be read by the table */
     private columnsLocal: IColumn[] = [];
@@ -332,8 +339,13 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
     /** Local copy of data */
     private dataLocal: MatTableDataSource<any> = new MatTableDataSource();
 
-    /** If the component has the search bar, this is true */
+    /** If the component has the search bar, this  is true */
     private searching = false;
+
+    /** Stores the filter options for each column
+     * In the format: { <name>: { label: '<column label>', values: [<value for column>...] } }
+     */
+    private filterOptions: any
 
     /** Selection model for selecting rows in the table */
     initialSelection = [];
@@ -359,8 +371,9 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
     /** Builds the head string for the csv file */
     private buildCSVHead(columns: string[]): string {
         let header = '';
-        for (const i of columns) {
-            header += `"${i}"${this.optionsLocal.downloadOptions.separator}`;
+        for (const [i, v] of columns.entries()) {
+            header += `"${v}"`;
+            if(i!==this.columnsLocal.length-1) header += this.optionsLocal.downloadOptions.separator;
         }
         return header + '\n';
     }
@@ -369,17 +382,17 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
     private buildCSVBody(data: any[]): string {
         let body = '';
         for (const row of data) {
-            for (const i of this.columnsLocal) {
-                if (typeof row[i.name] === 'string') {
-                    body += `"${row[i.name]}"`;
-                } else if (typeof row[i.name] === 'number') {
-                    body += `${row[i.name]}`;
-                } else if (typeof row[i.name] === 'boolean') {
-                    body += row[i.name] ? `"true"` : `"false"`;
-                } else if (typeof row[i.name] === 'object' && Object.prototype.toString.call(row[i.name]) === '[object Date]') {
-                    body += (row[i.name] as Date).toISOString();
+            for (const [i, v] of this.columnsLocal.entries()) {
+                if (typeof row[v.name] === 'string') {
+                    body += `"${row[v.name]}"`;
+                } else if (typeof row[v.name] === 'number') {
+                    body += `${row[v.name]}`;
+                } else if (typeof row[v.name] === 'boolean') {
+                    body += row[v.name] ? `"true"` : `"false"`;
+                } else if (typeof row[v.name] === 'object' && Object.prototype.toString.call(row[v.name]) === '[object Date]') {
+                    body += (row[v.name] as Date).toISOString();
                 }
-                body += this.optionsLocal.downloadOptions.separator;
+                if(i!==this.columnsLocal.length-1) body += this.optionsLocal.downloadOptions.separator;
             }
             body += '\n';
         }
@@ -387,17 +400,18 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
         return body;
     }
 
-    /** Creates a csv string and initiates a download with the given functionality */
-    private downloadCSV() {
-        const csvData = new Blob([this.buildCSVHead(this.displayedColumns) + this.buildCSVBody(this.data)], { type: 'text/csv' });
-        const csvUrl = URL.createObjectURL(csvData);
-        const link = document.createElement('a');
-        link.setAttribute('target', '_blank');
-        link.setAttribute('href', csvUrl);
-        link.setAttribute('download', this.optionsLocal.downloadOptions.filename);
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+    /**
+     * Triggers a print of the data in the table
+    **/
+    print(){
+        printHtml(getPrintableHTML(this.columnsLocal, this.dataLocal.data));
+    }
+
+    /**
+     * Triggers when the user clicks the download csv button
+    **/
+    onDownload(){
+        
     }
 
     /** Whether the number of selected elements matches the total number of rows. */
@@ -423,7 +437,7 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
     }
 
     private openFilter() {
-        this.dialog.open(SearchDialogComponent, {
+        this.dialog.open(FilterDialogComponent, {
             height: '300px',
             width: '400px',
             data: {
@@ -432,7 +446,19 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
         });
     }
 
+    private openColumns() {
+        this.dialog.open(ColumnsDialogComponent, {
+            height: '340px',
+            width: '400px',
+            data: {
+                title: this.optionsLocal.textLabels.viewColumns.title,
+                columns: this.columnsLocal
+            }
+        });
+    }
+
     ngOnInit() {
+        this.dataLocal.filterPredicate = getFilter(this.optionsLocal);
     }
 
     ngOnChanges() {
@@ -440,6 +466,7 @@ export class MuiDatatablesComponent implements OnInit, OnDestroy, OnChanges, Aft
 
     ngAfterViewInit() {
         this.dataLocal.paginator = this.paginator;
+        this.dataLocal.sort = this.sort;
     }
 
     ngOnDestroy() {

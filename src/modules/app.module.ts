@@ -6,13 +6,15 @@ import { MuiDatatablesComponent } from '../components/ngx-mui-datatable/ngx-mui-
 import { MaterialModule } from './material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { SearchDialogComponent } from 'src/components/dialogs/search/search-dialog.component';
+import { FilterDialogComponent } from 'src/components/dialogs/filter/filter-dialog.component';
+import { ColumnsDialogComponent } from 'src/components/dialogs/columns/columns-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MuiDatatablesComponent,
-    SearchDialogComponent
+    FilterDialogComponent,
+    ColumnsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +23,8 @@ import { SearchDialogComponent } from 'src/components/dialogs/search/search-dial
     FormsModule
   ],
   entryComponents: [
-    SearchDialogComponent
+    FilterDialogComponent,
+    ColumnsDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

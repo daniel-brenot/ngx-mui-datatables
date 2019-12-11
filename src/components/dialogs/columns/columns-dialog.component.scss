@@ -1,0 +1,12 @@
+mat-list{
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+    display: block;
+    height: 48px;
+    -webkit-tap-highlight-color: transparent;
+    width: 100%;
+    padding: 0;
+}
+.mat-dialog-content{
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

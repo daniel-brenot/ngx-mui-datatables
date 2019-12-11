@@ -1,15 +1,16 @@
-<div class="mat-elevation-z8">
+<div class="mat-elevation-z8" style="display: inline-block;min-width:100%;">
   <div class="toolbar">
     <div class="toolbar-left">
       <div *ngIf="searching" class="searchDiv">
         <mat-form-field class="input searchBar">
             <mat-icon matPrefix>search</mat-icon>
-            <input [(ngModel)]="optionsLocal.searchText" (keyup)="dataLocal.filter = $event.target.value.trim().toLowerCase();" matInput type="text" list="searchList">
+            <input [(ngModel)]="optionsLocal.searchText" 
+            (keyup)="dataLocal.filter = $event.target.value" matInput type="text" list="searchList">
             <datalist id="searchList">
               <option value="Boston"></option>
             </datalist>
         </mat-form-field>
-        <button mat-button mat-icon-button (click)="searching=false" class="cancelSearch">
+        <button mat-button mat-icon-button (click)="searching=false;dataLocal.filter='';optionsLocal.searchText=''" class="cancelSearch">
           <mat-icon>close</mat-icon>
         </button>
 
@@ -27,11 +28,12 @@
         mat-icon-button (click)="downloadCSV()">
         <mat-icon>cloud_download</mat-icon>
       </button>
-      <button *ngIf="optionsLocal.print" matTooltip="{{optionsLocal.textLabels.toolbar.print}}" aria-label="Print" mat-button mat-icon-button>
+      <button *ngIf="optionsLocal.print" matTooltip="{{optionsLocal.textLabels.toolbar.print}}" aria-label="Print" mat-button
+        (click)="print()" mat-icon-button>
         <mat-icon>print</mat-icon>
       </button>
       <button *ngIf="optionsLocal.viewColumns" matTooltip="{{optionsLocal.textLabels.toolbar.viewColumns}}" aria-label="View Columns" mat-button
-        mat-icon-button>
+        mat-icon-button (click)="openColumns()">
         <mat-icon>view_column</mat-icon>
       </button>
       <button *ngIf="optionsLocal.filter" matTooltip="{{optionsLocal.textLabels.toolbar.filterTable}}" aria-label="Filter Table" mat-button
@@ -41,7 +43,7 @@
     </div>
 
   </div>
-  <table mat-table [dataSource]="dataLocal" matSort >
+  <table mat-table [dataSource]="dataLocal" matSort matSortActive="optionsLocal.sort" (matSortChange)="optionsLocal.onSearchChange()">
 
     <!-- Checkbox Column -->
     <ng-container matColumnDef="select">
@@ -59,12 +61,20 @@
 
     <!-- other Columns -->
     <ng-container *ngFor="let column of columns" [matColumnDef]="column.name">
-      <th mat-header-cell *matHeaderCellDef> {{column.label}} </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear [disabled]="!column.options.sort"> {{column.label}} </th>
       <td mat-cell *matCellDef="let element"> {{element[column.name]}} </td>
+    </ng-container>
+
+    <!-- No data row -->
+    <ng-container matColumnDef="noData">
+      <td mat-footer-cell *matFooterCellDef colspan="999">
+        <h6>Sorry, no matching records found</h6>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="tableColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: tableColumns"></tr>
+    <tr mat-footer-row *matFooterRowDef="dataLocal.filteredData.length?[]:['noData']"></tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>

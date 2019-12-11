@@ -1,10 +1,21 @@
 table{
     width: 100%;
 }
+// Fix for empty table footer
+tr:empty{
+    display: none;
+}
+th.mat-header-cell:first-of-type {
+    padding-left: 24px;
+    padding-right: 24px;
+}
 .mat-column-select {
     overflow: initial;
 }
 .mat-row:hover{
+    background-color: rgba(0, 0, 0, 0.07);
+}
+.mat-footer-row:hover{
     background-color: rgba(0, 0, 0, 0.07);
 }
 h6{
@@ -16,13 +27,16 @@ h6{
     margin: 0;
     display: block;
 }
+.mat-footer-row{
+    text-align: center;
+}
 .toolbar-left{
-    flex: 1 1 55%;
+    flex: 1 1 100%;
     line-height: 64px;
 }
 .toolbar-right{
     text-align: right;
-    flex: 0 0 45%;
+    flex: 0 0 260px;
     line-height: 64px;
 }
 .toolbar{
@@ -76,4 +90,15 @@ h6{
 /* End icon alignment fix here */
 
 
-/* 620px is the breakpoint for the vertical toolbar */
+@media (max-width: 600px){
+    .toolbar{
+        max-height:200px;
+        display: block;
+    }
+    .toolbar-left{
+        text-align: center;
+    }
+    .toolbar-right{
+        text-align: center;
+    }
+}

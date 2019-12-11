@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { IMUIDTOptions } from '../ngx-mui-datatable/ngx-mui-datatable.component';
 
 @Component({
   selector: 'app-root',
@@ -61,7 +62,9 @@ export class AppComponent {
       ['Mason Ray', 'Computer Scientist', 'San Francisco', 39, '$142,000']
    ];
 
-  options = {
+  options: IMUIDTOptions = {
     filterType: 'checkbox',
+    caseSensitive: true,
+    sort:true
   };
 }
