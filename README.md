@@ -4,7 +4,7 @@
 
 # MUI-Datatables - Angular 2+ Datatables for Material-UI
 
-![Build Status](https://travis-ci.org/gregnb/mui-datatables.svg?branch=master)
+[![Build Status](https://jenkins.startturtleproject.ca/buildStatus/icon?job=ngx-mui-datatables)](https://jenkins.startturtleproject.ca/view/Tools/job/ngx-mui-datatables/)
 [![NPM Downloads](https://img.shields.io/npm/dt/ngx-mui-datatables.svg?style=flat)](https://npmcharts.com/compare/ngx-mui-datatables?minimal=true)
 [![Coverage Status](https://coveralls.io/repos/github/daniel-brenot/ngx-mui-datatables/badge.svg?branch=master)](https://coveralls.io/github/daniel-brenot/ngx-mui-datatables?branch=master)
 [![dependencies Status](https://david-dm.org/daniel-brenot/ngx-mui-datatables/status.svg)](https://david-dm.org/daniel-brenot/ngx-mui-datatables/)
