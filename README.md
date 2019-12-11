@@ -7,8 +7,11 @@
 ![Build Status](https://travis-ci.org/gregnb/mui-datatables.svg?branch=master)
 [![NPM Downloads](https://img.shields.io/npm/dt/ngx-mui-datatables.svg?style=flat)](https://npmcharts.com/compare/ngx-mui-datatables?minimal=true)
 [![Coverage Status](https://coveralls.io/repos/github/daniel-brenot/ngx-mui-datatables/badge.svg?branch=master)](https://coveralls.io/github/daniel-brenot/ngx-mui-datatables?branch=master)
-[![dependencies Status](https://david-dm.org/daniel-brenot/ngx-mui-datatables/status.svg)](https://david-dm.org/daniel-brenot/ngx-mui-datatables/status)
+[![dependencies Status](https://david-dm.org/daniel-brenot/ngx-mui-datatables/status.svg)](https://david-dm.org/daniel-brenot/ngx-mui-datatables/)
+[![devDependencies Status](https://david-dm.org/daniel-brenot/ngx-mui-datatables/dev-status.svg)](https://david-dm.org/daniel-brenot/ngx-mui-datatables/)
 [![npm version](https://badge.fury.io/js/ngx-mui-datatables.svg)](https://badge.fury.io/js/ngx-mui-datatables)
+[![Known Vulnerabilities](https://snyk.io/test/github/daniel-brenot/ngx-mui-datatables/badge.svg?targetFile=package.json)](https://snyk.io/test/daniel-brenot/dwyl/ngx-miu-datatables?targetFile=package.json)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 MUI-Datatables is a data tables component built on [Material-UI](https://www.material-ui.com).  It comes with features like filtering, resizable + view/hide columns, search, export to CSV download, printing, selectable rows, expandable rows, pagination, and sorting. On top of the ability to customize styling on most views, there are three responsive modes "stacked", "scrollMaxHeight", and "scrollFullHeight" for mobile/tablet devices.
 
