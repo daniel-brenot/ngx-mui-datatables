@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AppComponent } from '../components/app/app.component';
 import { MuiDatatablesComponent } from '../components/ngx-mui-datatable/ngx-mui-datatable.component';
@@ -26,6 +26,7 @@ import { ColumnsDialogComponent } from 'src/components/dialogs/columns/columns-d
     FilterDialogComponent,
     ColumnsDialogComponent
   ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [],
   bootstrap: [AppComponent]
 })

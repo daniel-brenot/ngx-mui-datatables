@@ -16,5 +16,15 @@ pipeline {
                 }
             }
         }
+        stage('Code Coverage') {
+            steps {
+                ansiColor('xterm'){
+                    withCredentials([string(credentialsId: 'ngx-mui-datatables-coveralls', variable: 'COVERALLS_REPO_TOKEN')]) {
+                        sh 'set +x'
+                        sh 'yarn coverage'
+                    }
+                }
+            }
+        }
     }
 }
